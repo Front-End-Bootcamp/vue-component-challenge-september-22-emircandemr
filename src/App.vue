@@ -9,9 +9,7 @@
 
   const groupsName = ref([]);
   const studentList = ref([]);
-
   const groupName = ref('');
-
 
   const groups = getGroups();
   groupsName.value = groups;
@@ -27,14 +25,14 @@
   
 </script>
 
-
 <template>
-
-  <h2 class="title" >Assignment 2 </h2>
+	
+  <h2 class="title" >Assignment 2</h2>
 
   <div class="groupNameContainer" >
-    <GroupNames v-for="groupName in groupsName" :key="groupName" :groupName ="groupName" @sendGroupName = "getGroupName" />
+    <GroupNames v-for="groupName in groupsName" :key="groupName" :groupName="groupName" @sendGroupName="getGroupName" />
   </div>
+
   <div class="groupMemberContainer">
     <template v-if="studentList.length > 0">
       <GroupMembers v-for="student in studentList" :key="student.id" :student = "student" :groupName="groupName"  />

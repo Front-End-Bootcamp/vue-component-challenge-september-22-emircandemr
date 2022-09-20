@@ -2,6 +2,7 @@
 	const props = defineProps(["groupName"])
 
 	const emit = defineEmits(["sendGroupName"])
+
 	const getGroupName = () => {
 			emit("sendGroupName", props.groupName)
 	}
@@ -9,12 +10,13 @@
 </script>
 
 <template>
+
 	<div class="groupCard">
 			<div class="groupCard__front">
-					<button  @click="getGroupName(groupName)" > Get Students </button>
+					<button  @click="getGroupName(groupName)"> Get Students </button>
 			</div>
 			<div class="groupCard__back">
-					<h3 :class=groupName >{{groupName}}</h3>
+					<h3 :class=groupName> {{groupName}} </h3>
 			</div>
 	</div>
 
