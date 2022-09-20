@@ -1,34 +1,85 @@
 <script setup>
-import BootcampLogo from "./assets/svg/BootcampLogo.vue"
-import HelloWorld from './components/HelloWorld.vue'
+
+  import GroupNames from '@/components/GroupNames/GroupNames.vue'
+  import GroupMembers from '@/components/GroupMembers/GroupMembers.vue'
+  import getGroups from '@/assets/script/getGroups.js'
+  import getGroup from '@/assets/script/getGroup.js'
+  import {ref} from 'vue';
+
+
+  const groupsName = ref([]);
+  const studentList = ref([]);
+
+  const groupName = ref('');
+
+
+  const groups = getGroups();
+  groupsName.value = groups;
+
+  const getStudentList =  (groupName) => {
+    studentList.value =  getGroup(groupName);
+  }
+
+  const getGroupName =  (name) => {
+    groupName.value = name
+    getStudentList(groupName.value)
+  }
+  
 </script>
 
+
 <template>
-	<div>
-		<BootcampLogo />
-		<br />
-		<a href="https://vitejs.dev" target="_blank">
-			<img src="/vite.svg" class="logo" alt="Vite logo" />
-		</a>
-		<a href="https://vuejs.org/" target="_blank">
-			<img src="/vue.svg" class="logo vue" alt="Vue logo" />
-		</a>
-	</div>
-	<HelloWorld msg="Vite + Vue" />
+
+  <h2 class="title" >Assignment 2 </h2>
+
+  <div class="groupNameContainer" >
+    <GroupNames v-for="groupName in groupsName" :key="groupName" :groupName ="groupName" @sendGroupName = "getGroupName" />
+  </div>
+  <div class="groupMemberContainer">
+    <template v-if="studentList.length > 0">
+      <GroupMembers v-for="student in studentList" :key="student.id" :student = "student" :groupName="groupName"  />
+    </template>
+    <div v-else>
+      <h2 class="emptyList">Student List is Empty</h2>
+    </div>
+  </div> 
+
 </template>
 
-<style scoped>
-.logo {
-	height: 6em;
-	padding: 1.5em;
-	will-change: filter;
-}
 
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
+<style lang="scss" scoped>
 
-.logo.vue:hover {
-	filter: drop-shadow(0 0 2em #42b883aa);
-}
+  .title{
+    font-size: 30px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    // color: #f4e699;
+    color :#e7c642;
+    margin-top: 40px;
+  }
+
+  .groupNameContainer{
+    width: 75%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .groupMemberContainer{
+    width: 65%;
+    min-height: 50vh;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin: auto;
+    overflow: auto;
+    background-color: #1e1d1dce;
+  }
+  .emptyList{
+    color :#e7c642;
+  }
+
 </style>
